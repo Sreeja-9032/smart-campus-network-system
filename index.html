@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCNM - Smart Campus Network Monitor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <h2>⚡ SCNM</h2>
+        <p>Smart Campus Network Monitor</p>
+
+        <nav>
+            <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
+            <button class="nav-btn" data-page="topology">🌐 Network Topology</button>
+            <button class="nav-btn" data-page="devices">🖥️ Device Monitoring</button>
+            <button class="nav-btn" data-page="dijkstra">🧭 Dijkstra Routing</button>
+            <button class="nav-btn" data-page="crc">📦 Framing & CRC</button>
+            <button class="nav-btn" data-page="sliding">🔄 Sliding Window</button>
+            <button class="nav-btn" data-page="goback">🔁 Go-Back-N ARQ</button>
+            <button class="nav-btn" data-page="wireshark">📡 Wireshark</button>
+            <button class="nav-btn" data-page="ns2">📊 NS2 Performance</button>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Smart Campus Network</h1>
+                <p>Network Monitoring and Routing System</p>
+            </div>
+            <span class="status">● System Online</span>
+        </header>
+
+        <!-- 1. DASHBOARD -->
+        <section id="dashboard" class="page active">
+            <h2>Network Dashboard</h2>
+            <p>Campus network overview and statistics.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Total Devices</h3><h2>24</h2></div>
+                <div class="stat-card"><h3>Online Devices</h3><h2>21</h2></div>
+                <div class="stat-card"><h3>Offline Devices</h3><h2>3</h2></div>
+                <div class="stat-card"><h3>Packets</h3><h2>1284</h2></div>
+                <div class="stat-card"><h3>Throughput</h3><h2>86.4 Mbps</h2></div>
+                <div class="stat-card"><h3>Packet Delivery</h3><h2>96%</h2></div>
+            </div>
+
+            <div class="panel">
+                <h3>Campus Network Overview</h3>
+                <div class="network-flow">
+                    <div>🌐<br>Internet</div>
+                    <span>➜</span>
+                    <div>📡<br>Router</div>
+                    <span>➜</span>
+                    <div>🔀<br>Core Switch</div>
+                    <span>➜</span>
+                    <div>🖥️<br>Campus Devices</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. NETWORK TOPOLOGY -->
+        <section id="topology" class="page">
+            <h2>Network Topology</h2>
+            <p>Campus network device connections.</p>
+            <div class="topology-grid">
+                <div class="network-node">🌐<br>Internet</div>
+                <div class="network-node">📡<br>Main Router</div>
+                <div class="network-node">🔀<br>Core Switch</div>
+                <div class="network-node">🖥️<br>Computer Lab</div>
+                <div class="network-node">👨‍🏫<br>Faculty PCs</div>
+                <div class="network-node">🗄️<br>Campus Server</div>
+                <div class="network-node">📚<br>Library PC</div>
+                <div class="network-node">📶<br>Wi-Fi Access Point</div>
+            </div>
+        </section>
+
+        <!-- 3. DEVICE MONITORING -->
+        <section id="devices" class="page">
+            <h2>Device Monitoring</h2>
+            <div class="panel">
+                <table>
+                    <thead>
+                        <tr><th>Device</th><th>IP Address</th><th>Type</th><th>Status</th><th>Latency</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Main Router</td><td>192.168.1.1</td><td>Router</td><td class="online">Online</td><td>5 ms</td></tr>
+                        <tr><td>Core Switch</td><td>192.168.1.2</td><td>Switch</td><td class="online">Online</td><td>3 ms</td></tr>
+                        <tr><td>Campus Server</td><td>192.168.1.10</td><td>Server</td><td class="online">Online</td><td>8 ms</td></tr>
+                        <tr><td>Computer Lab</td><td>192.168.1.20</td><td>Computer</td><td class="online">Online</td><td>9 ms</td></tr>
+                        <tr><td>Library PC</td><td>192.168.1.25</td><td>Computer</td><td class="offline">Offline</td><td>--</td></tr>
+                        <tr><td>Wi-Fi Access Point</td><td>192.168.1.30</td><td>Access Point</td><td class="online">Online</td><td>7 ms</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. DIJKSTRA ROUTING -->
+        <section id="dijkstra" class="page">
+            <h2>Dijkstra Shortest Path Routing</h2>
+            <div class="panel">
+                <label>Source Device</label>
+                <select id="source">
+                    <option>Internet</option><option>Router</option><option>Switch</option><option>Server</option><option>Lab</option>
+                </select>
+                <label>Destination Device</label>
+                <select id="destination">
+                    <option>Server</option><option>Internet</option><option>Router</option><option>Switch</option><option>Lab</option>
+                </select>
+                <button id="routeBtn">Find Shortest Path</button>
+                <div id="routeResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- 5. FRAMING AND CRC -->
+        <section id="crc" class="page">
+            <h2>Framing and CRC</h2>
+            <div class="panel">
+                <label>Enter Binary Data</label>
+                <input id="crcData" placeholder="Example: 101100">
+                <label>Generator Polynomial</label>
+                <select id="polynomial">
+                    <option value="1011">1011</option>
+                    <option value="1101">1101</option>
+                    <option value="10011">10011</option>
+                </select>
+                <button id="crcBtn">Calculate CRC</button>
+                <div id="crcResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- 6. SLIDING WINDOW -->
+        <section id="sliding" class="page">
+            <h2>Sliding Window Protocol</h2>
+            <p>Sender and Receiver frame transmission simulation.</p>
+            <div class="panel">
+                <label>Window Size</label>
+                <input id="windowSize" type="number" min="1" max="7" value="4">
+                <label>Total Frames</label>
+                <input id="totalFrames" type="number" min="1" max="20" value="8">
+                <h3>Sender</h3>
+                <div id="senderFrames" class="frames"></div>
+                <h3>Receiver</h3>
+                <div id="receiverFrames" class="frames"></div>
+                <button id="slidingBtn">Send Frames</button>
+                <button id="slidingNextBtn">Next Window</button>
+                <button id="slidingResetBtn">Reset</button>
+                <div id="slidingResult" class="result">Ready to send frames.</div>
+            </div>
+        </section>
+
+        <!-- 7. GO-BACK-N ARQ -->
+        <section id="goback" class="page">
+            <h2>Go-Back-N ARQ Protocol</h2>
+            <p>Frame transmission, acknowledgement and retransmission.</p>
+            <div class="panel">
+                <label>Window Size</label>
+                <input id="gbnWindow" type="number" min="1" max="7" value="4">
+                <label>Total Frames</label>
+                <input id="gbnTotal" type="number" min="1" max="20" value="8">
+                <label>Simulate Lost Frame</label>
+                <select id="lostFrame">
+                    <option value="2">Frame 2</option>
+                    <option value="3">Frame 3</option>
+                    <option value="4">Frame 4</option>
+                    <option value="5">Frame 5</option>
+                </select>
+                <h3>Sender</h3>
+                <div id="gbnSender" class="frames"></div>
+                <h3>Receiver</h3>
+                <div id="gbnReceiver" class="frames"></div>
+                <button id="gbnSendBtn">Send Frames</button>
+                <button id="gbnRetransmitBtn">Retransmit Lost Frames</button>
+                <button id="gbnResetBtn">Reset</button>
+                <div id="gbnResult" class="result">Ready for transmission.</div>
+            </div>
+        </section>
+
+        <!-- 8. WIRESHARK -->
+        <section id="wireshark" class="page">
+            <h2>Wireshark Packet Analysis</h2>
+            <p>Sample packet inspection simulation.</p>
+            <div class="panel">
+                <button id="captureBtn">Start Packet Capture</button>
+                <button id="clearCaptureBtn">Clear Packets</button>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>No.</th><th>Source IP</th><th>Destination IP</th><th>Protocol</th><th>Size</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="packetTable"></tbody>
+                    </table>
+                </div>
+                <div id="packetResult" class="result">No packets captured yet.</div>
+            </div>
+        </section>
+
+        <!-- NS2 PERFORMANCE -->
+        <section id="ns2" class="page">
+            <h2>NS2 Network Performance</h2>
+            <p>Sample network simulation performance metrics.</p>
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Throughput</h3><h2 id="throughput">0 Mbps</h2></div>
+                <div class="stat-card"><h3>Packet Loss</h3><h2 id="packetLoss">0%</h2></div>
+                <div class="stat-card"><h3>Delivery Ratio</h3><h2 id="deliveryRatio">0%</h2></div>
+                <div class="stat-card"><h3>Average Delay</h3><h2 id="averageDelay">0 ms</h2></div>
+            </div>
+            <div class="panel">
+                <button id="ns2RunBtn">Run NS2 Sample Simulation</button>
+                <canvas id="performanceChart" width="650" height="250"></canvas>
+                <div id="ns2Result" class="result">Simulation not started.</div>
+                <p class="note">These are illustrative browser simulation results, not measurements from a real NS2 execution.</p>
+            </div>
+        </section>
+
+        <footer>
+            Smart Campus Network Monitoring and Routing System | B.Tech CNIP Project
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
