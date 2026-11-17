@@ -25,6 +25,11 @@
             <button class="nav-btn" data-page="wireshark">📡 Wireshark</button>
             <button class="nav-btn" data-page="ns2">📊 NS2 Performance</button>
         </nav>
+
+        <div class="sidebar-footer">
+            <span class="api-tag">Java 26 / Spring Boot</span>
+            <small>CNIP Lab Demonstration</small>
+        </div>
     </aside>
 
     <main class="main-content">
@@ -32,195 +37,549 @@
         <header class="topbar">
             <div>
                 <h1>Smart Campus Network</h1>
-                <p>Network Monitoring and Routing System</p>
+                <p>Network Monitoring and Routing System | Spring Boot REST Backend</p>
             </div>
-            <span class="status">● System Online</span>
+            <div class="topbar-right">
+                <span id="systemStatus" class="status">● Checking Backend...</span>
+            </div>
         </header>
 
         <!-- 1. DASHBOARD -->
         <section id="dashboard" class="page active">
             <h2>Network Dashboard</h2>
-            <p>Campus network overview and statistics.</p>
+            <p>Campus network overview and device status. The performance figures below are dashboard demo values, separate from the backend-calculated results on the NS2 Performance page.</p>
 
             <div class="stats-grid">
-                <div class="stat-card"><h3>Total Devices</h3><h2>24</h2></div>
-                <div class="stat-card"><h3>Online Devices</h3><h2>21</h2></div>
-                <div class="stat-card"><h3>Offline Devices</h3><h2>3</h2></div>
-                <div class="stat-card"><h3>Packets</h3><h2>1284</h2></div>
-                <div class="stat-card"><h3>Throughput</h3><h2>86.4 Mbps</h2></div>
-                <div class="stat-card"><h3>Packet Delivery</h3><h2>96%</h2></div>
+                <div class="stat-card"><h3>Total Devices</h3><h2 id="dashTotalDevices">13</h2></div>
+                <div class="stat-card"><h3>Online Devices</h3><h2 id="dashOnlineDevices">13</h2></div>
+                <div class="stat-card"><h3>Offline Devices</h3><h2 id="dashOfflineDevices">0</h2></div>
+                <div class="stat-card"><h3>Demo Packets Inspected</h3><h2 id="dashPackets">14</h2></div>
+                <div class="stat-card"><h3>Demo Throughput</h3><h2 id="dashThroughput">86.4 Mbps</h2></div>
+                <div class="stat-card"><h3>Demo Packet Delivery</h3><h2 id="dashDelivery">96%</h2></div>
             </div>
 
             <div class="panel">
-                <h3>Campus Network Overview</h3>
+                <h3>Campus Network Architecture (5 Departments Connected to Core Infrastructure)</h3>
+                <p class="section-desc">Interactive overview of the campus hierarchical network linking all five academic departments through access switches, the high-speed campus core switch, and backbone router.</p>
+                
                 <div class="network-flow">
-                    <div>🌐<br>Internet</div>
+                    <div class="flow-box">🌍<br><strong>Gateway</strong><br><small>10.0.0.1</small></div>
                     <span>➜</span>
-                    <div>📡<br>Router</div>
+                    <div class="flow-box">🌐<br><strong>Core Router</strong><br><small>192.168.0.1</small></div>
                     <span>➜</span>
-                    <div>🔀<br>Core Switch</div>
+                    <div class="flow-box">🔀<br><strong>Core Switch</strong><br><small>192.168.0.2</small></div>
                     <span>➜</span>
-                    <div>🖥️<br>Campus Devices</div>
+                    <div class="flow-box department-box">
+                        <div class="flow-dept">💻 CS Dept<br><small>192.168.1.10</small></div>
+                        <div class="flow-dept">📡 ECE Dept<br><small>192.168.2.10</small></div>
+                        <div class="flow-dept">📚 Library<br><small>192.168.3.10</small></div>
+                        <div class="flow-dept">🏢 Admin Office<br><small>192.168.4.10</small></div>
+                        <div class="flow-dept server-dept">🗄️ Server Room<br><small>192.168.5.10</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>CNIP Protocol Demonstration Modules</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>🧭 Dijkstra Routing</h4>
+                        <p>Shortest-path calculation across campus links with positive metric costs.</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>📦 Framing (Byte Stuffing)</h4>
+                        <p>Frame encapsulation with FLAG delimiters and ESC character stuffing.</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>🛡️ CRC Error Detection</h4>
+                        <p>Modulo-2 binary division, transmitted codeword, syndrome check, and noise simulation.</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>🔄 Sliding Window</h4>
+                        <p>Sender window advancement and cumulative positive acknowledgement flow.</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>🔁 Go-Back-N ARQ</h4>
+                        <p>Packet drop, out-of-order frame discard, timeout, and window retransmission.</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>📊 Wireshark & NS2</h4>
+                        <p>Packet inspection and NS2 trace throughput/delay mathematical analysis.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- 2. NETWORK TOPOLOGY -->
         <section id="topology" class="page">
-            <h2>Network Topology</h2>
-            <p>Campus network device connections.</p>
-            <div class="topology-grid">
-                <div class="network-node">🌐<br>Internet</div>
-                <div class="network-node">📡<br>Main Router</div>
-                <div class="network-node">🔀<br>Core Switch</div>
-                <div class="network-node">🖥️<br>Computer Lab</div>
-                <div class="network-node">👨‍🏫<br>Faculty PCs</div>
-                <div class="network-node">🗄️<br>Campus Server</div>
-                <div class="network-node">📚<br>Library PC</div>
-                <div class="network-node">📶<br>Wi-Fi Access Point</div>
+            <div class="section-header-flex">
+                <div>
+                    <h2>Network Topology</h2>
+                    <p>University campus logical topology connecting 5 academic departments and infrastructure devices.</p>
+                </div>
+                <button id="refreshTopologyBtn" class="action-btn">🔄 Refresh Topology</button>
+            </div>
+
+            <div class="topology-grid" id="topologyContainer">
+                <!-- Dynamically populated or rendered from backend -->
+                <div class="network-node">💻<br><strong>Computer Science</strong><br><small>192.168.1.10</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">📡<br><strong>ECE Department</strong><br><small>192.168.2.10</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">📚<br><strong>Library</strong><br><small>192.168.3.10</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">🏢<br><strong>Administrative Office</strong><br><small>192.168.4.10</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">🗄️<br><strong>Server Room</strong><br><small>192.168.5.10</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">🌐<br><strong>Core Router</strong><br><small>192.168.0.1</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">🔀<br><strong>Core Switch</strong><br><small>192.168.0.2</small><br><span class="badge online">ONLINE</span></div>
+                <div class="network-node">🌍<br><strong>Internet Gateway</strong><br><small>10.0.0.1</small><br><span class="badge online">ONLINE</span></div>
+            </div>
+
+            <div class="panel">
+                <h3>Campus Network Links & Metric Costs (Graph Edges)</h3>
+                <p class="section-desc">Each connection represents a physical fiber or Ethernet link with an associated positive routing cost.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Source Node</th><th>Destination Node</th><th>Positive Metric Cost</th><th>Description</th></tr>
+                        </thead>
+                        <tbody id="topologyLinksTable">
+                            <tr><td>Computer Science (192.168.1.10)</td><td>CS Access Switch (192.168.1.1)</td><td>1</td><td>Fast Ethernet Local Access</td></tr>
+                            <tr><td>CS Access Switch (192.168.1.1)</td><td>Campus Core Switch (192.168.0.2)</td><td>3</td><td>Gigabit Fiber Trunk</td></tr>
+                            <tr><td>ECE Department (192.168.2.10)</td><td>ECE Access Switch (192.168.2.1)</td><td>1</td><td>Fast Ethernet Local Access</td></tr>
+                            <tr><td>ECE Access Switch (192.168.2.1)</td><td>Campus Core Switch (192.168.0.2)</td><td>4</td><td>Gigabit Fiber Trunk</td></tr>
+                            <tr><td>Library (192.168.3.10)</td><td>Library Switch (192.168.3.1)</td><td>1</td><td>Fast Ethernet Local Access</td></tr>
+                            <tr><td>Library Switch (192.168.3.1)</td><td>Campus Core Switch (192.168.0.2)</td><td>3</td><td>Gigabit Fiber Trunk</td></tr>
+                            <tr><td>Admin Office (192.168.4.10)</td><td>Admin Switch (192.168.4.1)</td><td>1</td><td>Fast Ethernet Local Access</td></tr>
+                            <tr><td>Admin Switch (192.168.4.1)</td><td>Campus Core Switch (192.168.0.2)</td><td>2</td><td>Gigabit Fiber Trunk</td></tr>
+                            <tr><td>Campus Core Switch (192.168.0.2)</td><td>Server Switch (192.168.5.1)</td><td>1</td><td>Direct 10GbE Data Center Backbone</td></tr>
+                            <tr><td>Server Switch (192.168.5.1)</td><td>Server Room (192.168.5.10)</td><td>1</td><td>High-Speed Server Link</td></tr>
+                            <tr><td>Campus Core Switch (192.168.0.2)</td><td>Core Router (192.168.0.1)</td><td>2</td><td>10GbE Backbone Trunk</td></tr>
+                            <tr><td>Core Router (192.168.0.1)</td><td>Internet Gateway (10.0.0.1)</td><td>5</td><td>ISP Fiber Link</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- 3. DEVICE MONITORING -->
         <section id="devices" class="page">
-            <h2>Device Monitoring</h2>
+            <div class="section-header-flex">
+                <div>
+                    <h2>Device Monitoring</h2>
+                    <p>Live status and latency metrics for all campus hosts and network switches.</p>
+                </div>
+                <div>
+                    <button id="refreshDevicesBtn" class="action-btn">🔄 Ping & Refresh Devices</button>
+                </div>
+            </div>
+
+            <div class="alert-banner">
+                <span class="info-icon">ℹ️</span>
+                <span><strong>Simulated Device Monitoring:</strong> Device state transitions, latencies, and ping metrics are simulated through the Java backend service (<a href="file:///c:/Users/sreev/Projects/CNIP/sreejacampusnetwork/src/main/java/com/smartcampus/network/service/TopologyService.java">TopologyService</a>) to demonstrate network health monitoring without requiring physical hardware probes.</span>
+            </div>
+
             <div class="panel">
-                <table>
-                    <thead>
-                        <tr><th>Device</th><th>IP Address</th><th>Type</th><th>Status</th><th>Latency</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Main Router</td><td>192.168.1.1</td><td>Router</td><td class="online">Online</td><td>5 ms</td></tr>
-                        <tr><td>Core Switch</td><td>192.168.1.2</td><td>Switch</td><td class="online">Online</td><td>3 ms</td></tr>
-                        <tr><td>Campus Server</td><td>192.168.1.10</td><td>Server</td><td class="online">Online</td><td>8 ms</td></tr>
-                        <tr><td>Computer Lab</td><td>192.168.1.20</td><td>Computer</td><td class="online">Online</td><td>9 ms</td></tr>
-                        <tr><td>Library PC</td><td>192.168.1.25</td><td>Computer</td><td class="offline">Offline</td><td>--</td></tr>
-                        <tr><td>Wi-Fi Access Point</td><td>192.168.1.30</td><td>Access Point</td><td class="online">Online</td><td>7 ms</td></tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Device Name</th><th>IP Address</th><th>Type</th><th>Status</th><th>Latency</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="deviceTableBody">
+                            <!-- Populated dynamically from GET /api/devices -->
+                            <tr><td>Computer Science</td><td>192.168.1.10</td><td>Department Host</td><td class="online">ONLINE</td><td>8 ms</td><td><button class="small-btn">Toggle</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- 4. DIJKSTRA ROUTING -->
         <section id="dijkstra" class="page">
             <h2>Dijkstra Shortest Path Routing</h2>
+            <p>Calculate optimal least-cost routing paths across campus network topology using Dijkstra's algorithm.</p>
+            
             <div class="panel">
-                <label>Source Device</label>
-                <select id="source">
-                    <option>Internet</option><option>Router</option><option>Switch</option><option>Server</option><option>Lab</option>
-                </select>
-                <label>Destination Device</label>
-                <select id="destination">
-                    <option>Server</option><option>Internet</option><option>Router</option><option>Switch</option><option>Lab</option>
-                </select>
-                <button id="routeBtn">Find Shortest Path</button>
-                <div id="routeResult" class="result"></div>
+                <div class="grid-2-col">
+                    <div>
+                        <label for="source">Source Device / Department</label>
+                        <select id="source">
+                            <option value="CS_DEPT">Computer Science (192.168.1.10)</option>
+                            <option value="ECE_DEPT">ECE Department (192.168.2.10)</option>
+                            <option value="LIBRARY_DEPT">Library (192.168.3.10)</option>
+                            <option value="ADMIN_DEPT">Administrative Office (192.168.4.10)</option>
+                            <option value="SERVER_ROOM">Server Room (192.168.5.10)</option>
+                            <option value="CORE_ROUTER">Core Router (192.168.0.1)</option>
+                            <option value="CORE_SWITCH">Campus Core Switch (192.168.0.2)</option>
+                            <option value="GATEWAY">Internet Gateway (10.0.0.1)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="destination">Destination Device / Department</label>
+                        <select id="destination">
+                            <option value="SERVER_ROOM" selected>Server Room (192.168.5.10)</option>
+                            <option value="CS_DEPT">Computer Science (192.168.1.10)</option>
+                            <option value="ECE_DEPT">ECE Department (192.168.2.10)</option>
+                            <option value="LIBRARY_DEPT">Library (192.168.3.10)</option>
+                            <option value="ADMIN_DEPT">Administrative Office (192.168.4.10)</option>
+                            <option value="CORE_ROUTER">Core Router (192.168.0.1)</option>
+                            <option value="CORE_SWITCH">Campus Core Switch (192.168.0.2)</option>
+                            <option value="GATEWAY">Internet Gateway (10.0.0.1)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="presets-row">
+                    <span class="preset-label">Quick Presets:</span>
+                    <button class="preset-btn" data-src="CS_DEPT" data-dst="SERVER_ROOM">CS ➜ Server Room</button>
+                    <button class="preset-btn" data-src="ECE_DEPT" data-dst="LIBRARY_DEPT">ECE ➜ Library</button>
+                    <button class="preset-btn" data-src="ADMIN_DEPT" data-dst="GATEWAY">Admin ➜ Internet Gateway</button>
+                    <button class="preset-btn" data-src="CS_DEPT" data-dst="CS_DEPT">Same Node (Cost 0)</button>
+                </div>
+
+                <button id="routeBtn">Find Shortest Path (Java Algorithm)</button>
+
+                <div id="routeResult" class="result">Select a source and destination, then click Find Shortest Path.</div>
+
+                <div id="routeHopsContainer" style="display: none; margin-top: 20px;">
+                    <h3>Hop-by-Hop Routing Breakdown</h3>
+                    <div class="table-wrap">
+                        <table id="routeHopsTable">
+                            <thead>
+                                <tr><th>Hop #</th><th>From Node</th><th>To Node</th><th>Edge Metric Cost</th><th>Cumulative Cost</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- 5. FRAMING AND CRC -->
         <section id="crc" class="page">
-            <h2>Framing and CRC</h2>
+            <h2>Framing and CRC Error Detection</h2>
+            <p>Data Link Layer framing techniques (Byte Stuffing) and mathematical CRC error detection with bit corruption simulation.</p>
+
+            <!-- A. FRAMING: BYTE STUFFING -->
             <div class="panel">
-                <label>Enter Binary Data</label>
-                <input id="crcData" placeholder="Example: 101100">
-                <label>Generator Polynomial</label>
-                <select id="polynomial">
-                    <option value="1011">1011</option>
-                    <option value="1101">1101</option>
-                    <option value="10011">10011</option>
-                </select>
-                <button id="crcBtn">Calculate CRC</button>
-                <div id="crcResult" class="result"></div>
+                <h3>1. Framing Technique: Byte Stuffing (Character-Oriented Framing)</h3>
+                <p class="section-desc">Demonstrates how user data is divided into frames, bounded by FLAG delimiters, and how occurrences of FLAG or ESC inside the payload are escaped.</p>
+
+                <label for="framingMessage">Enter Message to Frame</label>
+                <input id="framingMessage" value="CAMPUS FLAG DATA ESC 2026" placeholder="Enter message text...">
+
+                <div class="presets-row">
+                    <span class="preset-label">Sample Inputs:</span>
+                    <button class="preset-btn" id="presetFramingNormal">Normal Message</button>
+                    <button class="preset-btn" id="presetFramingFlag">Message with FLAG</button>
+                    <button class="preset-btn" id="presetFramingEsc">Message with ESC</button>
+                    <button class="preset-btn" id="presetFramingBoth">FLAG + ESC Combined</button>
+                </div>
+
+                <div class="grid-3-col">
+                    <div>
+                        <label for="flagDelimiter">FLAG Delimiter</label>
+                        <input id="flagDelimiter" value="FLAG" style="max-width: 150px;">
+                    </div>
+                    <div>
+                        <label for="escDelimiter">ESC Delimiter</label>
+                        <input id="escDelimiter" value="ESC" style="max-width: 150px;">
+                    </div>
+                    <div>
+                        <label for="framePayloadSize">Frame Size (Chars)</label>
+                        <input id="framePayloadSize" type="number" min="4" max="30" value="10" style="max-width: 150px;">
+                    </div>
+                </div>
+
+                <button id="encodeFramingBtn">Generate Byte-Stuffed Frames (Sender)</button>
+                <button id="decodeFramingBtn">Receiver De-stuffing & Reconstruct</button>
+
+                <div id="framingResult" class="result">Ready for framing encoding. Enter a message and click Generate Frames.</div>
+                <div id="framesDisplay" class="frames" style="margin-top: 15px;"></div>
+                <div id="deframingResult" class="result" style="display: none; border-left-color: #4ade80;"></div>
+            </div>
+
+            <!-- B. CRC ERROR DETECTION -->
+            <div class="panel">
+                <h3>2. CRC (Cyclic Redundancy Check) Error Detection</h3>
+                <p class="section-desc">Performs binary modulo-2 polynomial division using XOR arithmetic to compute CRC remainder and verify frame integrity at the receiver.</p>
+
+                <div class="grid-2-col">
+                    <div>
+                        <label for="crcData">Enter Binary Data</label>
+                        <input id="crcData" value="100100" placeholder="Example: 100100">
+                    </div>
+                    <div>
+                        <label for="polynomial">Generator Polynomial</label>
+                        <select id="polynomial">
+                            <option value="1011">1011 (CRC-4: x³ + x + 1)</option>
+                            <option value="1101">1101 (CRC-4: x³ + x² + 1)</option>
+                            <option value="10011">10011 (CRC-5: x⁴ + x + 1)</option>
+                            <option value="100000111">100000111 (CRC-8-ATM)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="presets-row">
+                    <span class="preset-label">Binary Presets:</span>
+                    <button class="preset-btn" id="presetCrc1">100100</button>
+                    <button class="preset-btn" id="presetCrc2">1101011011</button>
+                    <button class="preset-btn" id="presetCrc3">1010001101</button>
+                </div>
+
+                <button id="crcBtn">Calculate CRC & Codeword (Sender)</button>
+
+                <div id="crcResult" class="result">Enter binary data and select a polynomial to calculate CRC.</div>
+
+                <div id="crcReceiverPanel" style="display: none; margin-top: 25px; padding-top: 20px; border-top: 1px solid #263b59;">
+                    <h4>Receiver-Side Verification & Error Injection</h4>
+                    <p class="section-desc">Test error detection by verifying the codeword or injecting bit noise to trigger a non-zero syndrome.</p>
+                    
+                    <label for="receivedCodewordInput">Received Codeword (at Receiver):</label>
+                    <input id="receivedCodewordInput" style="max-width: 500px; font-family: monospace; font-size: 15px;">
+                    
+                    <button id="corruptBitBtn" class="secondary-btn">⚡ Corrupt 1 Bit (Simulate Noise)</button>
+                    <button id="verifyCrcBtn">Verify Received Codeword (Receiver)</button>
+
+                    <div id="crcVerifyResult" class="result" style="margin-top: 15px;"></div>
+                </div>
             </div>
         </section>
 
         <!-- 6. SLIDING WINDOW -->
         <section id="sliding" class="page">
             <h2>Sliding Window Protocol</h2>
-            <p>Sender and Receiver frame transmission simulation.</p>
+            <p>Sender and Receiver positive acknowledgement flow control simulation with dynamic sender window visualization.</p>
+            
             <div class="panel">
-                <label>Window Size</label>
-                <input id="windowSize" type="number" min="1" max="7" value="4">
-                <label>Total Frames</label>
-                <input id="totalFrames" type="number" min="1" max="20" value="8">
-                <h3>Sender</h3>
-                <div id="senderFrames" class="frames"></div>
-                <h3>Receiver</h3>
+                <div class="grid-2-col">
+                    <div>
+                        <label for="windowSize">Window Size (1 to 7)</label>
+                        <input id="windowSize" type="number" min="1" max="7" value="4">
+                    </div>
+                    <div>
+                        <label for="totalFrames">Total Frames to Transmit (1 to 20)</label>
+                        <input id="totalFrames" type="number" min="1" max="20" value="8">
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <button id="slidingBtn">Start Simulation (Backend)</button>
+                    <button id="slidingNextBtn" class="secondary-btn">Next Step ⏩</button>
+                    <button id="slidingAutoBtn" class="secondary-btn">Auto Play ▶</button>
+                    <button id="slidingResetBtn" class="secondary-btn">Reset</button>
+                </div>
+
+                <div class="window-tracker">
+                    <span id="windowInfoBadge" class="badge">Window: Idle</span>
+                    <span id="stepCounterBadge" class="badge">Step: 0</span>
+                    <span id="remainingBadge" class="badge">Frames Remaining: 0</span>
+                </div>
+
+                <h3>Sender Buffer & Active Window</h3>
+                <div id="senderFrames" class="frames window-container"></div>
+
+                <h3>Receiver Acknowledgement Buffer</h3>
                 <div id="receiverFrames" class="frames"></div>
-                <button id="slidingBtn">Send Frames</button>
-                <button id="slidingNextBtn">Next Window</button>
-                <button id="slidingResetBtn">Reset</button>
-                <div id="slidingResult" class="result">Ready to send frames.</div>
+
+                <div id="slidingResult" class="result">Configure window and total frames, then click Start Simulation.</div>
             </div>
         </section>
 
         <!-- 7. GO-BACK-N ARQ -->
         <section id="goback" class="page">
             <h2>Go-Back-N ARQ Protocol</h2>
-            <p>Frame transmission, acknowledgement and retransmission.</p>
+            <p>Error-recovery simulation demonstrating frame loss, out-of-order rejection, receiver discards, timeout, and window retransmission.</p>
+            
             <div class="panel">
-                <label>Window Size</label>
-                <input id="gbnWindow" type="number" min="1" max="7" value="4">
-                <label>Total Frames</label>
-                <input id="gbnTotal" type="number" min="1" max="20" value="8">
-                <label>Simulate Lost Frame</label>
-                <select id="lostFrame">
-                    <option value="2">Frame 2</option>
-                    <option value="3">Frame 3</option>
-                    <option value="4">Frame 4</option>
-                    <option value="5">Frame 5</option>
-                </select>
-                <h3>Sender</h3>
+                <div class="grid-3-col">
+                    <div>
+                        <label for="gbnWindow">Window Size (1 to 7)</label>
+                        <input id="gbnWindow" type="number" min="1" max="7" value="4">
+                    </div>
+                    <div>
+                        <label for="gbnTotal">Total Frames (1 to 20)</label>
+                        <input id="gbnTotal" type="number" min="1" max="20" value="8">
+                    </div>
+                    <div>
+                        <label for="lostFrame">Simulate Lost Frame</label>
+                        <select id="lostFrame">
+                            <option value="2">Frame 2</option>
+                            <option value="3" selected>Frame 3</option>
+                            <option value="4">Frame 4</option>
+                            <option value="5">Frame 5</option>
+                            <option value="-1">No Loss (Ideal Channel)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="controls-row">
+                    <button id="gbnSendBtn">Start GBN Simulation (Backend)</button>
+                    <button id="gbnNextBtn" class="secondary-btn">Next Step ⏩</button>
+                    <button id="gbnAutoBtn" class="secondary-btn">Auto Play ▶</button>
+                    <button id="gbnRetransmitBtn" class="secondary-btn">Fast-Forward Recovery</button>
+                    <button id="gbnResetBtn" class="secondary-btn">Reset</button>
+                </div>
+
+                <div class="legend-row">
+                    <span class="legend-item"><span class="legend-color in-window"></span> In Window</span>
+                    <span class="legend-item"><span class="legend-color acked"></span> Acknowledged</span>
+                    <span class="legend-item"><span class="legend-color lost"></span> Frame Lost</span>
+                    <span class="legend-item"><span class="legend-color discarded"></span> Discarded (Out of Order)</span>
+                    <span class="legend-item"><span class="legend-color retransmitted"></span> Retransmitted</span>
+                </div>
+
+                <h3>Sender Activity (Current Window: <span id="gbnSenderWindowLabel">[1 .. 4]</span>)</h3>
                 <div id="gbnSender" class="frames"></div>
-                <h3>Receiver</h3>
+
+                <h3>Receiver Activity (Expecting: <span id="gbnReceiverExpectedLabel">Frame 1</span>)</h3>
                 <div id="gbnReceiver" class="frames"></div>
-                <button id="gbnSendBtn">Send Frames</button>
-                <button id="gbnRetransmitBtn">Retransmit Lost Frames</button>
-                <button id="gbnResetBtn">Reset</button>
-                <div id="gbnResult" class="result">Ready for transmission.</div>
+
+                <div id="gbnResult" class="result">Ready for Go-Back-N transmission simulation.</div>
             </div>
         </section>
 
         <!-- 8. WIRESHARK -->
         <section id="wireshark" class="page">
-            <h2>Wireshark Packet Analysis</h2>
-            <p>Sample packet inspection simulation.</p>
+            <div class="section-header-flex">
+                <div>
+                    <h2>Wireshark Packet Analysis</h2>
+                    <p>Demonstration of packet capture analysis with support for real Wireshark CSV exports and simulated campus LAN traffic.</p>
+                </div>
+                <div class="button-group">
+                    <button id="captureBtn">Generate Campus Traffic</button>
+                    <button id="importCsvBtn" class="secondary-btn">📂 Import Wireshark CSV</button>
+                    <button id="loadSampleCsvBtn" class="secondary-btn">📄 Load Sample Capture</button>
+                    <button id="clearCaptureBtn" class="secondary-btn">Clear</button>
+                </div>
+            </div>
+
+            <!-- CSV Import Modal/Drawer -->
+            <div id="csvImportPanel" class="panel" style="display: none; border-color: #38bdf8;">
+                <h3>Import Wireshark CSV Packet Export</h3>
+                <p class="section-desc">Paste your Wireshark CSV dissection export below (or click Load Sample):</p>
+                <textarea id="csvInputText" rows="6" placeholder='"No.","Time","Source","Destination","Protocol","Length","Info"...'></textarea>
+                <div style="margin-top: 10px;">
+                    <button id="processCsvBtn">Parse & Analyze CSV</button>
+                    <button id="closeCsvPanelBtn" class="secondary-btn">Cancel</button>
+                </div>
+            </div>
+
             <div class="panel">
-                <button id="captureBtn">Start Packet Capture</button>
-                <button id="clearCaptureBtn">Clear Packets</button>
+                <div class="table-header-row">
+                    <div id="packetSourceBadge" class="data-badge simulated">Data Source: Simulated Campus Traffic</div>
+                    <div id="protocolChips" class="protocol-chips">
+                        <span class="chip tcp">TCP: 0</span>
+                        <span class="chip udp">UDP: 0</span>
+                        <span class="chip icmp">ICMP: 0</span>
+                        <span class="chip http">HTTP: 0</span>
+                        <span class="chip dns">DNS: 0</span>
+                    </div>
+                </div>
+
                 <div class="table-wrap">
                     <table>
                         <thead>
-                            <tr><th>No.</th><th>Source IP</th><th>Destination IP</th><th>Protocol</th><th>Size</th><th>Status</th></tr>
+                            <tr><th>No.</th><th>Time</th><th>Source IP</th><th>Destination IP</th><th>Protocol</th><th>Length</th><th>Status</th><th>Info</th></tr>
                         </thead>
                         <tbody id="packetTable"></tbody>
                     </table>
                 </div>
-                <div id="packetResult" class="result">No packets captured yet.</div>
+                <div id="packetResult" class="result">Click 'Generate Campus Traffic' or 'Import Wireshark CSV' to inspect packets.</div>
+            </div>
+
+            <!-- Wireshark Instructions Accordion -->
+            <div class="panel">
+                <h3>📖 Laboratory Guide: Capturing Campus Traffic with Wireshark</h3>
+                <ol class="guide-list">
+                    <li>Launch <strong>Wireshark</strong> on your workstation and select your active network adapter (e.g., <em>Ethernet</em> or <em>Wi-Fi</em>).</li>
+                    <li>Enter a display filter in the filter bar, e.g.: <code>ip.addr == 192.168.1.10 || icmp || tcp.port == 8080</code>.</li>
+                    <li>Generate traffic by pinging a campus department server or accessing a local web portal.</li>
+                    <li>Click the red square button to <strong>Stop Packet Capture</strong>.</li>
+                    <li>In Wireshark, navigate to <strong>File ➜ Export Packet Dissections ➜ As CSV...</strong> and save the file.</li>
+                    <li>Click <strong>Import Wireshark CSV</strong> above and paste the contents to visualize and analyze your live capture!</li>
+                </ol>
             </div>
         </section>
 
-        <!-- NS2 PERFORMANCE -->
+        <!-- 9. NS2 PERFORMANCE -->
         <section id="ns2" class="page">
-            <h2>NS2 Network Performance</h2>
-            <p>Sample network simulation performance metrics.</p>
-            <div class="stats-grid">
-                <div class="stat-card"><h3>Throughput</h3><h2 id="throughput">0 Mbps</h2></div>
-                <div class="stat-card"><h3>Packet Loss</h3><h2 id="packetLoss">0%</h2></div>
-                <div class="stat-card"><h3>Delivery Ratio</h3><h2 id="deliveryRatio">0%</h2></div>
-                <div class="stat-card"><h3>Average Delay</h3><h2 id="averageDelay">0 ms</h2></div>
+            <div class="section-header-flex">
+                <div>
+                    <h2>NS2 Network Performance Analysis</h2>
+                    <p>Discrete-event network performance metrics evaluation from NS2 trace files (.tr) with mathematical validation.</p>
+                </div>
+                <div class="button-group">
+                    <button id="ns2RunBtn">Run NS2 Demonstration</button>
+                    <button id="importTraceBtn" class="secondary-btn">📂 Import NS2 Trace (.tr)</button>
+                    <button id="viewTclBtn" class="secondary-btn">📜 View NS2 TCL Script</button>
+                </div>
             </div>
+
+            <div id="traceImportPanel" class="panel" style="display: none; border-color: #38bdf8;">
+                <h3>Import NS2 Simulation Trace Output (.tr)</h3>
+                <p class="section-desc">Paste lines from your NS2 simulation trace output file (format: <code>event time from to type size ... id</code>):</p>
+                <textarea id="traceInputText" rows="6" placeholder="+ 1.000000 0 1 cbr 1000 ------- 1 0.0 4.0 0 0&#10;- 1.000500 0 1 cbr 1000 ------- 1 0.0 4.0 0 0&#10;r 1.007500 3 4 cbr 1000 ------- 1 0.0 4.0 0 0"></textarea>
+                <div style="margin-top: 10px;">
+                    <button id="processTraceBtn">Analyze Trace Data</button>
+                    <button id="loadSampleTraceBtn" class="secondary-btn">Load Sample Trace (200 Pkts)</button>
+                    <button id="closeTracePanelBtn" class="secondary-btn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="tclScriptModal" class="panel" style="display: none; border-color: #4ade80;">
+                <div class="section-header-flex">
+                    <h3>campus_simulation.tcl - NS2 Simulation Script</h3>
+                    <button id="closeTclBtn" class="small-btn">Close ✕</button>
+                </div>
+                <pre id="tclScriptContent" class="code-box"></pre>
+                <p class="note">Run this script in terminal with: <code>ns campus_simulation.tcl</code> to produce <code>campus_simulation.tr</code>.</p>
+            </div>
+
+            <div class="table-header-row" style="margin-top: 15px;">
+                <div id="ns2ModeBadge" class="data-badge simulated">Mode: Demonstration Mode (Synthesized Trace)</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Throughput</h3><h2 id="throughput">0 Mbps</h2><small id="throughputSub">Bits/sec received</small></div>
+                <div class="stat-card"><h3>Packet Loss</h3><h2 id="packetLoss">0%</h2><small id="packetLossSub">Sent - Received</small></div>
+                <div class="stat-card"><h3>Delivery Ratio (PDR)</h3><h2 id="deliveryRatio">0%</h2><small id="deliverySub">(Recv/Sent) × 100</small></div>
+                <div class="stat-card"><h3>Average Delay</h3><h2 id="averageDelay">0 ms</h2><small id="delaySub">Mean end-to-end</small></div>
+            </div>
+
             <div class="panel">
-                <button id="ns2RunBtn">Run NS2 Sample Simulation</button>
+                <h3>Campus Throughput Curve (Mbps vs Time)</h3>
                 <canvas id="performanceChart" width="650" height="250"></canvas>
-                <div id="ns2Result" class="result">Simulation not started.</div>
-                <p class="note">These are illustrative browser simulation results, not measurements from a real NS2 execution.</p>
+                <div id="ns2Result" class="result">Click 'Run NS2 Demonstration' to evaluate network metrics.</div>
+            </div>
+
+            <!-- Mathematical Formulas Panel -->
+            <div class="panel">
+                <h3>Mathematical Formulas & Derivations</h3>
+                <div class="formula-grid">
+                    <div class="formula-card">
+                        <h4>Packet Loss</h4>
+                        <div class="formula-math">Packet Loss = Sent Packets - Received Packets</div>
+                        <p id="formulaLossCalc">Calculated from trace event markers ('+' for enqueue, 'r' for receive, 'd' for drop).</p>
+                    </div>
+                    <div class="formula-card">
+                        <h4>Packet Delivery Ratio (PDR)</h4>
+                        <div class="formula-math">PDR (%) = (Received Packets / Sent Packets) × 100</div>
+                        <p id="formulaPdrCalc">Proportion of packets successfully delivered to destination node.</p>
+                    </div>
+                    <div class="formula-card">
+                        <h4>Throughput</h4>
+                        <div class="formula-math">Throughput = Total Received Bits / Simulation Time</div>
+                        <p id="formulaThroughputCalc">Rate of successful message delivery over the campus channel (Mbps).</p>
+                    </div>
+                    <div class="formula-card">
+                        <h4>Average End-to-End Delay</h4>
+                        <div class="formula-math">Avg Delay = Σ(T_recv - T_send) / Total Received Packets</div>
+                        <p id="formulaDelayCalc">Average time taken for a packet to traverse all hops from sender to receiver.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <footer>
-            Smart Campus Network Monitoring and Routing System | B.Tech CNIP Project
+            Smart Campus Network Monitoring and Routing System | B.Tech CNIP Laboratory Project
         </footer>
 
     </main>
